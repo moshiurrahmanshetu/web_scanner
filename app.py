@@ -375,6 +375,14 @@ def history():
 
 
 @app.route('/download_report/<int:scan_id>/<format_type>')
+elif format == "pdf":
+    html_path = f"reports/scan_{scan_id}.html"
+    pdf_path = f"reports/scan_{scan_id}.pdf"
+
+    pdfkit.from_file(html_path, pdf_path, configuration=PDF_CONFIG)
+
+    return send_file(pdf_path, as_attachment=True)
+
 def download_report(scan_id, format_type):
     """Download scan report in JSON or HTML format"""
     try:
