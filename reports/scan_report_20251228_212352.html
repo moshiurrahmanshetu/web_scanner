@@ -1,0 +1,73 @@
+
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Vulnerability Scan Report - 17</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+        <style>
+            body { font-family: Arial, sans-serif; padding: 20px; }
+            .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 10px; margin-bottom: 30px; }
+            .vuln-card { margin-bottom: 20px; border-left: 4px solid; }
+            .severity-high { border-left-color: #dc3545; }
+            .severity-medium { border-left-color: #ffc107; }
+            .severity-low { border-left-color: #28a745; }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="header">
+                <h1>Web Vulnerability Scan Report</h1>
+                <p class="mb-0">Generated on 2025-12-28 21:23:52</p>
+            </div>
+            
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h3>Scan Information</h3>
+                </div>
+                <div class="card-body">
+                    <p><strong>Scan ID:</strong> 17</p>
+                    <p><strong>Target URL:</strong> http://testphp.vulnweb.com/listproducts.php?cat=1</p>
+                    <p><strong>Scan Time:</strong> 2025-12-28 20:16:56</p>
+                    <p><strong>Total Vulnerabilities:</strong> 3</p>
+                </div>
+            </div>
+            
+            <h2>Detected Vulnerabilities</h2>
+    
+            <div class="card vuln-card severity-high">
+                <div class="card-body">
+                    <h4>Vulnerability #1: SQL Injection</h4>
+                    <p><strong>Severity:</strong> <span class="badge bg-danger">HIGH</span></p>
+                    <p><strong>Parameter:</strong> cat</p>
+                    <p><strong>Payload:</strong> <code>'</code></p>
+                    
+                </div>
+            </div>
+            
+            <div class="card vuln-card severity-high">
+                <div class="card-body">
+                    <h4>Vulnerability #2: SQL Injection</h4>
+                    <p><strong>Severity:</strong> <span class="badge bg-danger">HIGH</span></p>
+                    <p><strong>Parameter:</strong> cat</p>
+                    <p><strong>Payload:</strong> <code>'</code></p>
+                    
+                </div>
+            </div>
+            
+            <div class="card vuln-card severity-high">
+                <div class="card-body">
+                    <h4>Vulnerability #3: Reflected XSS</h4>
+                    <p><strong>Severity:</strong> <span class="badge bg-danger">HIGH</span></p>
+                    <p><strong>Parameter:</strong> cat</p>
+                    <p><strong>Payload:</strong> <code><script>alert('XSS')</script></code></p>
+                    
+                </div>
+            </div>
+            
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    </body>
+    </html>
+    

@@ -4,7 +4,7 @@ Main entry point for the web-based scanner
 """
 
 
-
+from flask import send_file, flash, redirect, url_for
 import pdfkit
 import os
 import json
@@ -391,6 +391,10 @@ def download_report(scan_id, format_type):
             if not db.connect():
                 flash('Database connection error', 'error')
                 return redirect(url_for('index'))
+            
+        html_path = f"reports/scan_{scan_id}.html"
+        json_path = f"reports/scan_{scan_id}.json"
+        pdf_path  = f"reports/scan_{scan_id}.pdf"
         
         # Get scan details
         db.cursor.execute("SELECT scan_id, target_url, scan_time FROM scans WHERE scan_id = %s", (scan_id,))
