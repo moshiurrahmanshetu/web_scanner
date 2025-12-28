@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Web Vulnerability Scanner{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="mb-0"><i class="bi bi-speedometer2"></i> Dashboard</h2>
+            </div>
+            <div class="card-body">
+                <p class="lead">Welcome to the Mini Web Vulnerability Scanner</p>
+                <p>This tool helps you identify common web vulnerabilities including SQL Injection and Cross-Site Scripting (XSS) in web applications.</p>
+                
+                <div class="row mt-4">
+                    <div class="col-md-4">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <i class="bi bi-bug" style="font-size: 3rem; color: #dc3545;"></i>
+                                <h4 class="mt-3">SQL Injection</h4>
+                                <p>Detects SQL injection vulnerabilities using error-based detection methods.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <i class="bi bi-shield-exclamation" style="font-size: 3rem; color: #ffc107;"></i>
+                                <h4 class="mt-3">XSS Detection</h4>
+                                <p>Identifies reflected Cross-Site Scripting vulnerabilities in web applications.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card text-center">
+                            <div class="card-body">
+                                <i class="bi bi-file-earmark-text" style="font-size: 3rem; color: #28a745;"></i>
+                                <h4 class="mt-3">Detailed Reports</h4>
+                                <p>Generate comprehensive reports in JSON and HTML formats for documentation.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <a href="{{ url_for('scan') }}" class="btn btn-primary btn-lg">
+                        <i class="bi bi-search"></i> Start New Scan
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if recent_scans %}
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="mb-0"><i class="bi bi-clock-history"></i> Recent Scans</h3>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Scan ID</th>
+                                <th>Target URL</th>
+                                <th>Scan Time</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for scan in recent_scans %}
+                            <tr>
+                                <td>{{ scan[0] }}</td>
+                                <td>
+                                    <a href="{{ scan[1] }}" target="_blank" class="text-decoration-none">
+                                        {{ scan[1][:50] }}{% if scan[1]|length > 50 %}...{% endif %}
+                                    </a>
+                                </td>
+                                <td>{{ scan[2] }}</td>
+                                <td>
+                                    <a href="{{ url_for('results', scan_id=scan[0]) }}" class="btn btn-sm btn-primary">
+                                        <i class="bi bi-eye"></i> View Results
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-center mt-3">
+                    <a href="{{ url_for('history') }}" class="btn btn-outline-primary">
+                        View All Scans <i class="bi bi-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4><i class="bi bi-info-circle"></i> How to Use</h4>
+                <ol>
+                    <li>Click on <strong>"Start New Scan"</strong> or navigate to the Scan page</li>
+                    <li>Enter the target URL (must include query parameters, e.g., <code>http://example.com/page?id=1</code>)</li>
+                    <li>Click <strong>"Start Scan"</strong> to begin vulnerability detection</li>
+                    <li>View detailed results including vulnerability type, severity, and payloads</li>
+                    <li>Download reports in JSON or HTML format for documentation</li>
+                </ol>
+                
+                <div class="alert alert-info mt-3">
+                    <strong>Note:</strong> This tool is designed for testing your own applications or authorized penetration testing only. 
+                    Always ensure you have proper authorization before scanning any website.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
