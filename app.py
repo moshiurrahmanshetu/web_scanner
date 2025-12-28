@@ -3,6 +3,9 @@ Flask Web Application - Mini Web Vulnerability Scanner
 Main entry point for the web-based scanner
 """
 
+
+
+import pdfkit
 import os
 import json
 from datetime import datetime
@@ -10,6 +13,11 @@ from flask import Flask, render_template, request, redirect, url_for, flash, jso
 from db_config import DatabaseManager
 from scanner.sqli_scanner import SQLIScanner
 from scanner.xss_scanner import XSSScanner
+
+
+PDF_CONFIG = pdfkit.configuration(
+    wkhtmltopdf=r"C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe"
+)
 
 app = Flask(__name__)
 app.secret_key = 'your-secret-key-change-in-production'  # Change this in production
@@ -375,14 +383,6 @@ def history():
 
 
 @app.route('/download_report/<int:scan_id>/<format_type>')
-elif format == "pdf":
-    html_path = f"reports/scan_{scan_id}.html"
-    pdf_path = f"reports/scan_{scan_id}.pdf"
-
-    pdfkit.from_file(html_path, pdf_path, configuration=PDF_CONFIG)
-
-    return send_file(pdf_path, as_attachment=True)
-
 def download_report(scan_id, format_type):
     """Download scan report in JSON or HTML format"""
     try:
@@ -448,6 +448,15 @@ def download_report(scan_id, format_type):
         elif format_type == 'html':
             filename = generate_html_report(scan_result)
             return send_file(filename, as_attachment=True, download_name=f'scan_report_{scan_id}.html')
+        
+        # PDF
+        elif format_type == "pdf":
+            pdfkit.from_file(
+                html_path,
+                pdf_path,
+                configuration=PDF_CONFIG
+            )
+            return send_file(pdf_path, as_attachment=True)
         
         else:
             flash('Invalid format type', 'error')
