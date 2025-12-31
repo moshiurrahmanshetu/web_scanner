@@ -1,0 +1,26 @@
+{
+  "scan_id": 22,
+  "scan_time": "2025-12-29T11:15:58",
+  "target_url": "http://testphp.vulnweb.com/listproducts.php?cat=1",
+  "total_vulnerabilities": 3,
+  "vulnerabilities": [
+    {
+      "type": "SQL Injection",
+      "parameter": "cat",
+      "severity": "HIGH",
+      "payload": "'"
+    },
+    {
+      "type": "SQL Injection",
+      "parameter": "cat",
+      "severity": "HIGH",
+      "payload": "'"
+    },
+    {
+      "type": "Reflected XSS",
+      "parameter": "cat",
+      "severity": "HIGH",
+      "payload": "<script>alert('XSS')</script>"
+    }
+  ]
+}

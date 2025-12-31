@@ -1,0 +1,20 @@
+{
+  "scan_id": 23,
+  "scan_time": "2025-12-29T12:20:58",
+  "target_url": "http://testphp.vulnweb.com/search.php?test=%3Cscript%3Ealert(1)%3C/script%3E",
+  "total_vulnerabilities": 2,
+  "vulnerabilities": [
+    {
+      "type": "SQL Injection",
+      "parameter": "test",
+      "severity": "HIGH",
+      "payload": "'"
+    },
+    {
+      "type": "Reflected XSS",
+      "parameter": "test",
+      "severity": "HIGH",
+      "payload": "'\"><script>alert('XSS')</script>"
+    }
+  ]
+}

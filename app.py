@@ -3,7 +3,7 @@ Flask Web Application - Mini Web Vulnerability Scanner
 Main entry point for the web-based scanner
 """
 
-
+from flask import render_template
 from flask import send_file, flash, redirect, url_for
 import pdfkit
 import os
@@ -16,7 +16,7 @@ from scanner.xss_scanner import XSSScanner
 
 
 PDF_CONFIG = pdfkit.configuration(
-    wkhtmltopdf=r"C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe"
+    wkhtmltopdf=r"c:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe"
 )
 
 app = Flask(__name__)
@@ -143,7 +143,7 @@ def generate_html_report(scan_result):
     """Generate HTML report"""
     timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
     filename = f'reports/scan_report_{timestamp}.html'
-    
+ 
     html_content = f"""
     <!DOCTYPE html>
     <html lang="en">
@@ -455,12 +455,19 @@ def download_report(scan_id, format_type):
         
         # PDF
         elif format_type == "pdf":
-            pdfkit.from_file(
-                html_path,
-                pdf_path,
-                configuration=PDF_CONFIG
-            )
-            return send_file(pdf_path, as_attachment=True)
+            html_file = generate_html_report(scan_result)
+
+            if not os.path.exists(html_file):
+                flash("HTML report not found", "error")
+                return redirect(url_for("results", scan_id=scan_id))
+
+            pdf_file = f"reports/scan_{scan_id}.pdf"
+
+            pdfkit.from_file(html_file, pdf_file, configuration=PDF_CONFIG)
+
+            return send_file(pdf_file, as_attachment=True)
+
+
         
         else:
             flash('Invalid format type', 'error')
